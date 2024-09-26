@@ -4,13 +4,13 @@ import {
   Header,
   HttpCode,
   HttpRedirectResponse,
-  Param,
   Post,
   Query,
   Redirect,
+  Req,
   Res,
 } from '@nestjs/common';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 @Controller('/api/users')
 export class UserController {
@@ -69,8 +69,21 @@ export class UserController {
   }
 
   // * if only need the id, use @Param instead of @Req
-  @Get('/:id')
-  getById(@Param('id') id: string): string {
-    return `GET ${id}`;
+  // @Get('/:id')
+  // getById(@Param('id') id: string): string {
+  //   return `GET ${id}`;
+  // }
+
+  // * Set cookie via express response
+  @Get('/set-cookie')
+  setCookie(@Query('name') name: string, @Res() response: Response) {
+    response.cookie('name', name);
+    response.status(200).send('Success Set Cookie');
+  }
+
+  // * Get cookie via express request
+  @Get('/get-cookie')
+  getCookie(@Req() request: Request): string {
+    return request.cookies['name'];
   }
 }
