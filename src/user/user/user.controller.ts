@@ -11,11 +11,25 @@ import {
   Res,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { UserService } from './user.service';
 
 // ** generated from  nest generate controller [name] [path api]
 
 @Controller('/api/users')
 export class UserController {
+  // * Automatic Injection example using constructor
+  constructor(private service: UserService) {}
+
+  // * Manual Injection example
+  // @Inject()
+  // @Optional() // * Optional if the incjetion is not required
+  // private userService: UserService;
+
+  @Get('/hello')
+  sayHello(@Query('name') name: string): string {
+    return this.service.sayHello(name);
+  }
+
   @Post()
   post(): string {
     return 'POST /api/users';
@@ -61,13 +75,13 @@ export class UserController {
 
   // * if only need the query, use @Query instead of @Req
   //  * if need multiple queries or params, just pass them in
-  @Get('/hello')
+  @Get('/hi')
   // * async method example
-  async sayHello(
+  async sayHi(
     @Query('first_name') firstName: string,
     @Query('last_name') lastName: string,
   ): Promise<string> {
-    return `Hello ${firstName} ${lastName}`;
+    return `Hi, ${firstName} ${lastName}!`;
   }
 
   // * if only need the id, use @Param instead of @Req
