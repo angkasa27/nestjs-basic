@@ -12,6 +12,8 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
+// ** generated from  nest generate controller [name] [path api]
+
 @Controller('/api/users')
 export class UserController {
   @Post()
