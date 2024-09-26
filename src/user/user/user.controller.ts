@@ -12,22 +12,31 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from './user.service';
+import { Connection } from '../connection/connection';
 
-// ** generated from  nest generate controller [name] [path api]
+// ** generated from  nest generate controller [name] [path folder]
 
 @Controller('/api/users')
 export class UserController {
   // * Automatic Injection example using constructor
-  constructor(private service: UserService) {}
+  constructor(
+    private service: UserService,
+    private connection: Connection,
+  ) {}
 
   // * Manual Injection example
   // @Inject()
-  // @Optional() // * Optional if the incjetion is not required
+  // @Optional() // * Optional if the injection is not required
   // private userService: UserService;
 
   @Get('/hello')
   sayHello(@Query('name') name: string): string {
     return this.service.sayHello(name);
+  }
+
+  @Get('/connection')
+  async getConnection(): Promise<string> {
+    return this.connection.getName();
   }
 
   @Post()
