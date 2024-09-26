@@ -86,4 +86,10 @@ export class UserController {
   getCookie(@Req() request: Request): string {
     return request.cookies['name'];
   }
+
+  // * Render template / view mustache
+  @Get('/view/hello')
+  viewHello(@Query('name') name: string, @Res() response: Response) {
+    response.render('index.html', { title: 'Template Engine', name });
+  }
 }
