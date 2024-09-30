@@ -14,6 +14,7 @@ import { Request, Response } from 'express';
 import { UserService } from './user.service';
 import { Connection } from '../connection/connection';
 import { MailService } from '../mail/mail.service';
+import { UserRepository } from '../user-repository/user-repository';
 
 // ** generated from  nest generate controller [name] [path folder]
 
@@ -24,6 +25,7 @@ export class UserController {
     private service: UserService,
     private connection: Connection,
     private mailService: MailService,
+    private userRepository: UserRepository,
   ) {}
 
   // * Manual Injection example
@@ -38,6 +40,7 @@ export class UserController {
 
   @Get('/connection')
   async getConnection(): Promise<string> {
+    this.userRepository.save();
     this.mailService.send();
     return this.connection.getName();
   }

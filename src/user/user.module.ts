@@ -7,8 +7,10 @@ import {
   MySQLConnection,
 } from './connection/connection';
 import { mailService, MailService } from './mail/mail.service';
-import { UserRepository } from './user-repository/user-repository';
-import { UserRepository } from './user-repository/user-repository';
+import {
+  createUserRepository,
+  UserRepository,
+} from './user-repository/user-repository';
 
 @Module({
   controllers: [UserController],
@@ -23,7 +25,11 @@ import { UserRepository } from './user-repository/user-repository';
       provide: MailService,
       useValue: mailService, // * value provider
     },
-    UserRepository,
+    {
+      provide: UserRepository,
+      useFactory: createUserRepository,
+      inject: [Connection],
+    },
   ],
 })
 export class UserModule {}
