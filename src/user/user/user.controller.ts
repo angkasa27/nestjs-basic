@@ -4,6 +4,7 @@ import {
   Header,
   HttpCode,
   HttpRedirectResponse,
+  Inject,
   Post,
   Query,
   Redirect,
@@ -26,6 +27,7 @@ export class UserController {
     private connection: Connection,
     private mailService: MailService,
     private userRepository: UserRepository,
+    @Inject('EmailService') private emailService: MailService, // *alias provider
   ) {}
 
   // * Manual Injection example
@@ -42,6 +44,7 @@ export class UserController {
   async getConnection(): Promise<string> {
     this.userRepository.save();
     this.mailService.send();
+    this.emailService.send();
     return this.connection.getName();
   }
 

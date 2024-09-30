@@ -26,9 +26,13 @@ import {
       useValue: mailService, // * value provider
     },
     {
+      provide: 'EmailService',
+      useExisting: MailService, // * alias provider
+    },
+    {
       provide: UserRepository,
-      useFactory: createUserRepository,
-      inject: [Connection],
+      useFactory: createUserRepository, // * Factory provider
+      inject: [Connection], // * what to inject
     },
   ],
 })
