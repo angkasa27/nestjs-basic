@@ -16,6 +16,7 @@ import { UserService } from './user.service';
 import { Connection } from '../connection/connection';
 import { MailService } from '../mail/mail.service';
 import { UserRepository } from '../user-repository/user-repository';
+import { MemberService } from '../member/member.service';
 
 // ** generated from  nest generate controller [name] [path folder]
 
@@ -28,6 +29,7 @@ export class UserController {
     private mailService: MailService,
     private userRepository: UserRepository,
     @Inject('EmailService') private emailService: MailService, // *alias provider
+    private memberService: MemberService,
   ) {}
 
   // * Manual Injection example
@@ -45,6 +47,10 @@ export class UserController {
     this.userRepository.save();
     this.mailService.send();
     this.emailService.send();
+
+    console.info(this.memberService.getConnectionName());
+    console.info(this.memberService.sendEmail());
+
     return this.connection.getName();
   }
 
