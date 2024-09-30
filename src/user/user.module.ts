@@ -36,5 +36,7 @@ import { ConfigService } from '@nestjs/config';
     },
     MemberService,
   ],
+  // * exports: [UserService], // * export the service to be used in other modules
+  exports: [UserService],
 })
 export class UserModule {}
