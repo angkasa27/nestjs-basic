@@ -6,6 +6,9 @@ import {
   MongoDBConnection,
   MySQLConnection,
 } from './connection/connection';
+import { mailService, MailService } from './mail/mail.service';
+import { UserRepository } from './user-repository/user-repository';
+import { UserRepository } from './user-repository/user-repository';
 
 @Module({
   controllers: [UserController],
@@ -16,6 +19,11 @@ import {
       useClass:
         process.env.DATABASE == 'mysql' ? MySQLConnection : MongoDBConnection, // * dynamic module injection / class provider
     },
+    {
+      provide: MailService,
+      useValue: mailService, // * value provider
+    },
+    UserRepository,
   ],
 })
 export class UserModule {}

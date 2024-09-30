@@ -13,6 +13,7 @@ import {
 import { Request, Response } from 'express';
 import { UserService } from './user.service';
 import { Connection } from '../connection/connection';
+import { MailService } from '../mail/mail.service';
 
 // ** generated from  nest generate controller [name] [path folder]
 
@@ -22,6 +23,7 @@ export class UserController {
   constructor(
     private service: UserService,
     private connection: Connection,
+    private mailService: MailService,
   ) {}
 
   // * Manual Injection example
@@ -36,6 +38,7 @@ export class UserController {
 
   @Get('/connection')
   async getConnection(): Promise<string> {
+    this.mailService.send();
     return this.connection.getName();
   }
 
